@@ -1,0 +1,12 @@
+package app.g_agent.reference_data_service.repository;
+
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import app.g_agent.reference_data_service.model.InsuranceCompany;
+
+public interface InsuranceCompanyRepository extends JpaRepository<InsuranceCompany, Long> {
+    Optional<InsuranceCompany> getInsuranceCompanyById(Long id);
+    Optional<InsuranceCompany> getInsuranceCompanyByCode(String code);
+}
