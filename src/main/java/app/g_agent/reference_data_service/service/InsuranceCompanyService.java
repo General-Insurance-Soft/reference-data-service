@@ -21,9 +21,11 @@ public class InsuranceCompanyService {
     private static final Logger logger = LoggerFactory.getLogger(InsuranceCompanyService.class);
 
     private final InsuranceCompanyRepository insuranceCompanyRepository;
+    private JwtService jwtService;
 
     public InsuranceCompanyService(InsuranceCompanyRepository insuranceCompanyRepository) {
         this.insuranceCompanyRepository = insuranceCompanyRepository;
+        this.jwtService = jwtService;
     }
 
     public InsuranceCompany getInsuranceCompanyById(Long id) throws Exception {
@@ -39,11 +41,14 @@ public class InsuranceCompanyService {
     public void createInsuranceCompany(HttpServletRequest request, InsuranceCompanyDto insuranceCompanyDto)
             throws Exception {
         InsuranceCompany insuranceCompany = new InsuranceCompany();
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");        
+
         insuranceCompany.setName(insuranceCompanyDto.getName());
         insuranceCompany.setCode(insuranceCompanyDto.getCode());
         insuranceCompany.setContactEmail(insuranceCompanyDto.getContactEmail());
         insuranceCompany.setContactPhone(insuranceCompanyDto.getContactPhone());
         insuranceCompany.setAddress(insuranceCompanyDto.getAddress());
+        insuranceCompany.setUpdatedBy(userId);
 
         try {
             insuranceCompanyRepository.save(insuranceCompany);
@@ -60,6 +65,7 @@ public class InsuranceCompanyService {
     public void updateInsuranceCompany(HttpServletRequest request, Long id, InsuranceCompanyDto insuranceCompanyDto)
             throws Exception {
         Optional<InsuranceCompany> insuranceCompanyOpt = insuranceCompanyRepository.getInsuranceCompanyById(id);
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
         if (insuranceCompanyOpt.isEmpty()) {
             throw new Exception("The insurance company cannot be found");
@@ -71,6 +77,7 @@ public class InsuranceCompanyService {
         insuranceCompany.setContactEmail(insuranceCompanyDto.getContactEmail());
         insuranceCompany.setContactPhone(insuranceCompanyDto.getContactPhone());
         insuranceCompany.setAddress(insuranceCompanyDto.getAddress());
+        insuranceCompany.setUpdatedBy(userId);
 
         try {
             insuranceCompanyRepository.save(insuranceCompany);

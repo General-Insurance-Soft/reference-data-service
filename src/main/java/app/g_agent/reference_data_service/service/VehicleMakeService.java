@@ -21,9 +21,11 @@ public class VehicleMakeService {
     private static final Logger logger = LoggerFactory.getLogger(VehicleMakeService.class);
 
     private final VehicleMakeRepository vehicleMakeRepository;
+    private JwtService jwtService;
 
     public VehicleMakeService(VehicleMakeRepository vehicleMakeRepository) {
         this.vehicleMakeRepository = vehicleMakeRepository;
+        this.jwtService = jwtService;
     }
 
     public VehicleMake getVehicleMakeById(Long id) throws Exception {
@@ -38,7 +40,10 @@ public class VehicleMakeService {
     @Transactional
     public void createVehicleMake(HttpServletRequest request, VehicleMakeDto vehicleMakeDto) throws Exception {
         VehicleMake vehicleMake = new VehicleMake();
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+
         vehicleMake.setMake(vehicleMakeDto.getMake());
+        vehicleMake.setUpdatedBy(userId);
 
         try {
             vehicleMakeRepository.save(vehicleMake);
@@ -54,6 +59,7 @@ public class VehicleMakeService {
     @Transactional
     public void updateVehicleMake(HttpServletRequest request, Long id, VehicleMakeDto vehicleMakeDto) throws Exception {
         Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
         if (vehicleMakeOpt.isEmpty()) {
             throw new Exception("The vehicle make cannot be found");
@@ -61,6 +67,7 @@ public class VehicleMakeService {
 
         VehicleMake vehicleMake = vehicleMakeOpt.get();
         vehicleMake.setMake(vehicleMakeDto.getMake());
+        vehicleMake.setUpdatedBy(userId);
 
         try {
             vehicleMakeRepository.save(vehicleMake);

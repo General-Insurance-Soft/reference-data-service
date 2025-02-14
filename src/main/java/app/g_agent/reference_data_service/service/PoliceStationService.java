@@ -21,9 +21,11 @@ public class PoliceStationService {
     private static final Logger logger = LoggerFactory.getLogger(PoliceStationService.class);
 
     private final PoliceStationRepository policeStationRepository;
+    private JwtService jwtService;
 
     public PoliceStationService(PoliceStationRepository policeStationRepository) {
         this.policeStationRepository = policeStationRepository;
+        this.jwtService = jwtService;
     }
 
     public PoliceStation getPoliceStationById(Long id) throws Exception {
@@ -37,11 +39,14 @@ public class PoliceStationService {
 
     @Transactional
     public void createPoliceStation(HttpServletRequest request, PoliceStationDto policeStationDto) throws Exception {
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
         PoliceStation policeStation = new PoliceStation();
+
         policeStation.setName(policeStationDto.getName());
         policeStation.setLocation(policeStationDto.getLocation());
         policeStation.setJurisdiction(policeStationDto.getJurisdiction());
         policeStation.setContactPhone(policeStationDto.getContactPhone());
+        policeStation.setUpdatedBy(userId);
 
         try {
             policeStationRepository.save(policeStation);
@@ -58,6 +63,7 @@ public class PoliceStationService {
     public void updatePoliceStation(HttpServletRequest request, Long id, PoliceStationDto policeStationDto)
             throws Exception {
         Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
         if (policeStationOpt.isEmpty()) {
             throw new Exception("The police station cannot be found");
@@ -68,6 +74,7 @@ public class PoliceStationService {
         policeStation.setLocation(policeStationDto.getLocation());
         policeStation.setJurisdiction(policeStationDto.getJurisdiction());
         policeStation.setContactPhone(policeStationDto.getContactPhone());
+        policeStation.setUpdatedBy(userId);
 
         try {
             policeStationRepository.save(policeStation);

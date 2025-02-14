@@ -13,6 +13,7 @@ import app.g_agent.reference_data_service.model.VehicleMake;
 import app.g_agent.reference_data_service.model.VehicleModel;
 import app.g_agent.reference_data_service.repository.VehicleMakeRepository;
 import app.g_agent.reference_data_service.repository.VehicleModelRepository;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Service
 public class VehicleModelService {
@@ -21,10 +22,13 @@ public class VehicleModelService {
 
     private final VehicleModelRepository vehicleModelRepository;
     private final VehicleMakeRepository vehicleMakeRepository;
+    private JwtService jwtService;
 
-    public VehicleModelService(VehicleModelRepository vehicleModelRepository, VehicleMakeRepository vehicleMakeRepository) {
+    public VehicleModelService(VehicleModelRepository vehicleModelRepository,
+            VehicleMakeRepository vehicleMakeRepository) {
         this.vehicleModelRepository = vehicleModelRepository;
         this.vehicleMakeRepository = vehicleMakeRepository;
+        this.jwtService = jwtService;
     }
 
     public VehicleModel getVehicleModelById(Long id) throws Exception {
@@ -37,11 +41,15 @@ public class VehicleModelService {
     }
 
     @Transactional
-    public void createVehicleModel(VehicleModelDto vehicleModelDto) throws Exception {
+    public void createVehicleModel(HttpServletRequest request, VehicleModelDto vehicleModelDto) throws Exception {
         VehicleModel vehicleModel = new VehicleModel();
-        vehicleModel.setModel(vehicleModelDto.getModel());
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
-        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(vehicleModelDto.getMake().getId());
+        vehicleModel.setModel(vehicleModelDto.getModel());
+        vehicleModel.setUpdatedBy(userId);
+
+        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository
+                .getVehicleMakeById(vehicleModelDto.getMake().getId());
         if (vehicleMakeOpt.isEmpty()) {
             throw new Exception("The Vehicle Make does not exist");
         }
@@ -59,8 +67,10 @@ public class VehicleModelService {
     }
 
     @Transactional
-    public void updateVehicleModel(Long id, VehicleModelDto vehicleModelDto) throws Exception {
+    public void updateVehicleModel(HttpServletRequest request, Long id, VehicleModelDto vehicleModelDto)
+            throws Exception {
         Optional<VehicleModel> vehicleModelOpt = vehicleModelRepository.getVehicleModelById(id);
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
         if (vehicleModelOpt.isEmpty()) {
             throw new Exception("The vehicle model cannot be found");
@@ -68,8 +78,10 @@ public class VehicleModelService {
 
         VehicleModel vehicleModel = vehicleModelOpt.get();
         vehicleModel.setModel(vehicleModelDto.getModel());
+        vehicleModel.setUpdatedBy(userId);
 
-        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(vehicleModelDto.getMake().getId());
+        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository
+                .getVehicleMakeById(vehicleModelDto.getMake().getId());
         if (vehicleMakeOpt.isEmpty()) {
             throw new Exception("The Vehicle Make does not exist");
         }
