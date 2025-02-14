@@ -1,5 +1,9 @@
 package app.g_agent.reference_data_service.dto;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -14,7 +18,28 @@ public class VehicleModelDto {
     @NotNull(message = "Make is required")
     private VehicleMakeDto make;
 
+    private LocalDateTime updatedAt;
+
+    @JsonProperty(value = "updated_by")
+    private Long updatedBy;
+
     // Getters and Setters
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Long getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(Long updatedBy) {
+        this.updatedBy = updatedBy;
+    }
 
     public Long getId() {
         return id;
