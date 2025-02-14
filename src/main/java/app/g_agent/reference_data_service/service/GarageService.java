@@ -21,9 +21,11 @@ public class GarageService {
     private static final Logger logger = LoggerFactory.getLogger(GarageService.class);
 
     private final GarageRepository garageRepository;
+    private JwtService jwtService;
 
     public GarageService(GarageRepository garageRepository) {
         this.garageRepository = garageRepository;
+        this.jwtService = jwtService;
     }
 
     public Garage getGarageById(Long id) throws Exception {
@@ -37,11 +39,14 @@ public class GarageService {
 
     @Transactional
     public void createGarage(HttpServletRequest request, GarageDto garageDto) throws Exception {
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+
         Garage garage = new Garage();
         garage.setName(garageDto.getName());
         garage.setLocation(garageDto.getLocation());
         garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
         garage.setContactPhone(garageDto.getContactPhone());
+        garage.setUpdatedBy(userId);
 
         try {
             garageRepository.save(garage);
@@ -56,6 +61,7 @@ public class GarageService {
 
     @Transactional
     public void updateGarage(HttpServletRequest request, Long id, GarageDto garageDto) throws Exception {
+        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
         Optional<Garage> garageOpt = garageRepository.getGarageById(id);
 
         if (garageOpt.isEmpty()) {
@@ -67,6 +73,7 @@ public class GarageService {
         garage.setLocation(garageDto.getLocation());
         garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
         garage.setContactPhone(garageDto.getContactPhone());
+        garage.setUpdatedBy(userId);
 
         try {
             garageRepository.save(garage);
@@ -101,6 +108,8 @@ public class GarageService {
             garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
             garageDto.setContactPhone(garage.getContactPhone());
             garageDto.setCreatedAt(garage.getCreatedAt());
+            garageDto.setUpdatedAt(garage.getUpdatedAt());
+            garageDto.setUpdatedBy(garage.getUpdatedBy());
             return garageDto;
         } else {
             throw new Exception("The Garage does not exist");
@@ -117,6 +126,8 @@ public class GarageService {
             garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
             garageDto.setContactPhone(garage.getContactPhone());
             garageDto.setCreatedAt(garage.getCreatedAt());
+            garageDto.setUpdatedAt(garage.getUpdatedAt());
+            garageDto.setUpdatedBy(garage.getUpdatedBy());
             return garageDto;
         }).collect(Collectors.toList());
     }
