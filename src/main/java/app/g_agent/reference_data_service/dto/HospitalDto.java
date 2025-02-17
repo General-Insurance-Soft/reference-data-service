@@ -17,6 +17,7 @@ public class HospitalDto {
 
 	private String location;
 
+	@JsonProperty(value = "approved_insurance_companies")
 	private String approvedInsuranceCompanies; // JSON array of insurer IDs
 
 	@JsonProperty(value = "contact_phone")
