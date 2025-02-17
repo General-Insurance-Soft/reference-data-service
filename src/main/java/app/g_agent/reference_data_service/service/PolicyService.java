@@ -23,7 +23,7 @@ public class PolicyService {
     private final PolicyRepository policyRepository;
     private JwtService jwtService;
 
-    public PolicyService(PolicyRepository policyRepository) {
+    public PolicyService(PolicyRepository policyRepository, JwtService jwtService) {
         this.policyRepository = policyRepository;
         this.jwtService = jwtService;
     }

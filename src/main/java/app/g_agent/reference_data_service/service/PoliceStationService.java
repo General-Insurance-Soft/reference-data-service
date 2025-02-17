@@ -23,7 +23,7 @@ public class PoliceStationService {
     private final PoliceStationRepository policeStationRepository;
     private JwtService jwtService;
 
-    public PoliceStationService(PoliceStationRepository policeStationRepository) {
+    public PoliceStationService(PoliceStationRepository policeStationRepository, JwtService jwtService) {
         this.policeStationRepository = policeStationRepository;
         this.jwtService = jwtService;
     }

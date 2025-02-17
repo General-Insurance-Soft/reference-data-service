@@ -23,7 +23,7 @@ public class VehicleMakeService {
 	private final VehicleMakeRepository vehicleMakeRepository;
 	private JwtService jwtService;
 
-	public VehicleMakeService(VehicleMakeRepository vehicleMakeRepository) {
+	public VehicleMakeService(VehicleMakeRepository vehicleMakeRepository, JwtService jwtService) {
 		this.vehicleMakeRepository = vehicleMakeRepository;
 		this.jwtService = jwtService;
 	}

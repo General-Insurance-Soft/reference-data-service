@@ -20,10 +20,10 @@ public class GarageService {
 
     private static final Logger logger = LoggerFactory.getLogger(GarageService.class);
 
-    private final GarageRepository garageRepository;
+    private  GarageRepository garageRepository;
     private JwtService jwtService;
 
-    public GarageService(GarageRepository garageRepository) {
+    public GarageService(GarageRepository garageRepository, JwtService jwtService) {
         this.garageRepository = garageRepository;
         this.jwtService = jwtService;
     }

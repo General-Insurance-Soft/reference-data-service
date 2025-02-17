@@ -28,7 +28,7 @@ public class VehicleModelService {
 	private JwtService jwtService;
 
 	public VehicleModelService(VehicleModelRepository vehicleModelRepository,
-			VehicleMakeRepository vehicleMakeRepository) {
+			VehicleMakeRepository vehicleMakeRepository, JwtService jwtService) {
 		this.vehicleModelRepository = vehicleModelRepository;
 		this.vehicleMakeRepository = vehicleMakeRepository;
 		this.jwtService = jwtService;
