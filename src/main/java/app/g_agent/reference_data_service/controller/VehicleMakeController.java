@@ -25,89 +25,89 @@ import jakarta.validation.Valid;
 @Validated
 public class VehicleMakeController {
 
-    private static final Logger logger = LoggerFactory.getLogger(VehicleMakeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(VehicleMakeController.class);
 
-    @Autowired
-    VehicleMakeService vehicleMakeService;
+	@Autowired
+	VehicleMakeService vehicleMakeService;
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createVehicleMake(HttpServletRequest request,
-            @Valid @RequestBody VehicleMakeDto vehicleMakeDto) {
-        Message message = new Message();
+	@PostMapping("/create")
+	public ResponseEntity<?> createVehicleMake(HttpServletRequest request,
+			@Valid @RequestBody VehicleMakeDto vehicleMakeDto) {
+		Message message = new Message();
 
-        try {
-            vehicleMakeService.createVehicleMake(request, vehicleMakeDto);
-            message.setName("Success");
-            message.setMessage("Vehicle Make created successfully");
-            return ResponseEntity.ok(message);
-        } catch (Exception ex) {
-            logger.error("Error creating vehicle make", ex);
-            message.setName("Error");
-            message.setMessage(ex.getMessage());
-            return ResponseEntity.status(403).body(message);
-        }
-    }
+		try {
+			vehicleMakeService.createVehicleMake(request, vehicleMakeDto);
+			message.setName("Success");
+			message.setMessage("Vehicle Make created successfully");
+			return ResponseEntity.ok(message);
+		} catch (Exception ex) {
+			logger.error("Error creating vehicle make", ex);
+			message.setName("Error");
+			message.setMessage(ex.getMessage());
+			return ResponseEntity.status(403).body(message);
+		}
+	}
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateVehicleMake(HttpServletRequest request, @RequestBody VehicleMakeDto vehicleMakeDto,
-            @RequestParam Long id) {
-        Message message = new Message();
+	@PutMapping("/update")
+	public ResponseEntity<?> updateVehicleMake(HttpServletRequest request, @RequestBody VehicleMakeDto vehicleMakeDto,
+			@RequestParam Long id) {
+		Message message = new Message();
 
-        try {
-            vehicleMakeService.updateVehicleMake(request, id, vehicleMakeDto);
-            message.setName("Success");
-            message.setMessage("Vehicle Make updated successfully");
-            return ResponseEntity.ok(message);
-        } catch (Exception ex) {
-            logger.error("Error updating vehicle make", ex);
-            message.setName("Error");
-            message.setMessage(ex.getMessage());
-            return ResponseEntity.status(403).body(message);
-        }
-    }
+		try {
+			vehicleMakeService.updateVehicleMake(request, id, vehicleMakeDto);
+			message.setName("Success");
+			message.setMessage("Vehicle Make updated successfully");
+			return ResponseEntity.ok(message);
+		} catch (Exception ex) {
+			logger.error("Error updating vehicle make", ex);
+			message.setName("Error");
+			message.setMessage(ex.getMessage());
+			return ResponseEntity.status(403).body(message);
+		}
+	}
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteVehicleMake(HttpServletRequest request, @RequestParam Long id) {
-        Message message = new Message();
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deleteVehicleMake(HttpServletRequest request, @RequestParam Long id) {
+		Message message = new Message();
 
-        try {
-            vehicleMakeService.deleteVehicleMake(request, id);
-            message.setName("Success");
-            message.setMessage("Vehicle Make deleted successfully");
-            return ResponseEntity.ok(message);
-        } catch (Exception ex) {
-            logger.error("Error deleting vehicle make", ex);
-            message.setName("Error");
-            message.setMessage(ex.getMessage());
-            return ResponseEntity.status(403).body(message);
-        }
-    }
+		try {
+			vehicleMakeService.deleteVehicleMake(request, id);
+			message.setName("Success");
+			message.setMessage("Vehicle Make deleted successfully");
+			return ResponseEntity.ok(message);
+		} catch (Exception ex) {
+			logger.error("Error deleting vehicle make", ex);
+			message.setName("Error");
+			message.setMessage(ex.getMessage());
+			return ResponseEntity.status(403).body(message);
+		}
+	}
 
-    @GetMapping("/get")
-    public ResponseEntity<?> getVehicleMake(HttpServletRequest request, @RequestParam Long id) {
-        Message message = new Message();
+	@GetMapping("/get")
+	public ResponseEntity<?> getVehicleMake(HttpServletRequest request, @RequestParam Long id) {
+		Message message = new Message();
 
-        try {
-            return ResponseEntity.ok(vehicleMakeService.getVehicleMake(request, id));
-        } catch (Exception ex) {
-            logger.error("Error retrieving vehicle make", ex);
-            message.setName("Error");
-            message.setMessage(ex.getMessage());
-            return ResponseEntity.status(403).body(message);
-        }
-    }
+		try {
+			return ResponseEntity.ok(vehicleMakeService.getVehicleMake(request, id));
+		} catch (Exception ex) {
+			logger.error("Error retrieving vehicle make", ex);
+			message.setName("Error");
+			message.setMessage(ex.getMessage());
+			return ResponseEntity.status(403).body(message);
+		}
+	}
 
-    @GetMapping("/get-vehicle-makes")
-    public ResponseEntity<?> getVehicleMakes(HttpServletRequest request) {
-        Message message = new Message();
+	@GetMapping("/get-vehicle-makes")
+	public ResponseEntity<?> getVehicleMakes(HttpServletRequest request) {
+		Message message = new Message();
 
-        try {
-            return ResponseEntity.ok(vehicleMakeService.getVehicleMakes(request));
-        } catch (Exception ex) {
-            logger.error("Error retrieving vehicle makes", ex);
-            message.setName("Error");
-            message.setMessage(ex.getMessage());
-            return ResponseEntity.status(403).body(message);
-        }
-    }
+		try {
+			return ResponseEntity.ok(vehicleMakeService.getVehicleMakes(request));
+		} catch (Exception ex) {
+			logger.error("Error retrieving vehicle makes", ex);
+			message.setName("Error");
+			message.setMessage(ex.getMessage());
+			return ResponseEntity.status(403).body(message);
+		}
+	}
 }

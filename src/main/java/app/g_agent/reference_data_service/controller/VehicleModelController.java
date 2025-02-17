@@ -34,54 +34,89 @@ public class VehicleModelController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createVehicleModel(HttpServletRequest request, @Valid @RequestBody VehicleModelDto vehicleModelDto) {
+        
+        Message message = new Message();
+        
         try {
-            vehicleModelService.createVehicleModel(vehicleModelDto);
-            return ResponseEntity.ok(new Message("Vehicle model created successfully"));
-        } catch (Exception e) {
-            logger.error("Error creating vehicle model", e);
-            return ResponseEntity.badRequest().body(new Message(e.getMessage()));
+        	vehicleModelService.createVehicleModel( request,vehicleModelDto);
+            message.setName("Success");
+            message.setMessage("Vehicle model created successfully");
+            return ResponseEntity.ok(message);
+        } catch (Exception ex) {
+            logger.error("Error creating vehicle model", ex);
+            message.setName("Error");
+            message.setMessage(ex.getMessage());
+            return ResponseEntity.status(403).body(message);
         }
     }
 
     @PutMapping("/update")
     public ResponseEntity<?> updateVehicleModel(HttpServletRequest request, @RequestBody VehicleModelDto vehicleModelDto, @RequestParam Long id) {
+       
+        
+        Message message = new Message();
+
         try {
-            vehicleModelService.updateVehicleModel(id, vehicleModelDto);
-            return ResponseEntity.ok(new Message("Vehicle model updated successfully"));
-        } catch (Exception e) {
-            logger.error("Error updating vehicle model", e);
-            return ResponseEntity.badRequest().body(new Message(e.getMessage()));
+        	vehicleModelService.updateVehicleModel(request, id, vehicleModelDto);
+            message.setName("Success");
+            message.setMessage("Vehicle model updated successfully");
+            return ResponseEntity.ok(message);
+        } catch (Exception ex) {
+            logger.error("Error updating vehicle model", ex);
+            message.setName("Error");
+            message.setMessage(ex.getMessage());
+            return ResponseEntity.status(403).body(message);
         }
     }
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteVehicleModel(HttpServletRequest request, @RequestParam Long id) {
+       
+        
+        Message message = new Message();
+
         try {
-            vehicleModelService.deleteVehicleModel(id);
-            return ResponseEntity.ok(new Message("Vehicle model deleted successfully"));
-        } catch (Exception e) {
-            logger.error("Error deleting vehicle model", e);
-            return ResponseEntity.badRequest().body(new Message(e.getMessage()));
+        	vehicleModelService.deleteVehicleModel(id);
+            message.setName("Success");
+            message.setMessage("Vehicle model deleted successfully");
+            return ResponseEntity.ok(message);
+        } catch (Exception ex) {
+            logger.error("Error deleting vehicle model", ex);
+            message.setName("Error");
+            message.setMessage(ex.getMessage());
+            return ResponseEntity.status(403).body(message);
         }
     }
 
     @GetMapping("/get")
     public ResponseEntity<?> getVehicleModel(HttpServletRequest request, @RequestParam Long id) {
+        
+        Message message = new Message();
+
         try {
             return ResponseEntity.ok(vehicleModelService.getVehicleModelById(id));
-        } catch (Exception e) {
-            logger.error("Error retrieving vehicle model", e);
-            return ResponseEntity.badRequest().body(new Message(e.getMessage()));
+        } catch (Exception ex) {
+            logger.error("Error retrieving vehicle model", ex);
+            message.setName("Error");
+            message.setMessage(ex.getMessage());
+            return ResponseEntity.status(403).body(message);
         }
     }
 
     @GetMapping("/get-vehicle-models")
     public ResponseEntity<?> getVehicleModels(HttpServletRequest request) {
+       
+        Message message = new Message();
+
         try {
-            return ResponseEntity.ok(vehicleModelService.getAllVehicleModels());
-        } catch (Exception e) {
-            logger.error("Error retrieving vehicle models", e);
-            return ResponseEntity.badRequest().body(new Message(e.getMessage()));
+			return ResponseEntity.ok(vehicleModelService.getAllVehicleModels());
+        } catch (Exception ex) {
+            logger.error("Error retrieving vehicle models", ex);
+            message.setName("Error");
+            message.setMessage(ex.getMessage());
+            return ResponseEntity.status(403).body(message);
         }
+        
+        
     }
 }

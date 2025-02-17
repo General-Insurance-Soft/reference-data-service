@@ -18,99 +18,99 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class VehicleMakeService {
 
-    private static final Logger logger = LoggerFactory.getLogger(VehicleMakeService.class);
+	private static final Logger logger = LoggerFactory.getLogger(VehicleMakeService.class);
 
-    private final VehicleMakeRepository vehicleMakeRepository;
-    private JwtService jwtService;
+	private final VehicleMakeRepository vehicleMakeRepository;
+	private JwtService jwtService;
 
-    public VehicleMakeService(VehicleMakeRepository vehicleMakeRepository) {
-        this.vehicleMakeRepository = vehicleMakeRepository;
-        this.jwtService = jwtService;
-    }
+	public VehicleMakeService(VehicleMakeRepository vehicleMakeRepository) {
+		this.vehicleMakeRepository = vehicleMakeRepository;
+		this.jwtService = jwtService;
+	}
 
-    public VehicleMake getVehicleMakeById(Long id) throws Exception {
-        Optional<VehicleMake> vehicleMake = vehicleMakeRepository.getVehicleMakeById(id);
-        if (vehicleMake.isPresent()) {
-            return vehicleMake.get();
-        } else {
-            throw new Exception("The Vehicle Make does not exist");
-        }
-    }
+	public VehicleMake getVehicleMakeById(Long id) throws Exception {
+		Optional<VehicleMake> vehicleMake = vehicleMakeRepository.getVehicleMakeById(id);
+		if (vehicleMake.isPresent()) {
+			return vehicleMake.get();
+		} else {
+			throw new Exception("The Vehicle Make does not exist");
+		}
+	}
 
-    @Transactional
-    public void createVehicleMake(HttpServletRequest request, VehicleMakeDto vehicleMakeDto) throws Exception {
-        VehicleMake vehicleMake = new VehicleMake();
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+	@Transactional
+	public void createVehicleMake(HttpServletRequest request, VehicleMakeDto vehicleMakeDto) throws Exception {
+		VehicleMake vehicleMake = new VehicleMake();
+		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
-        vehicleMake.setMake(vehicleMakeDto.getMake());
-        vehicleMake.setUpdatedBy(userId);
+		vehicleMake.setMake(vehicleMakeDto.getMake());
+		vehicleMake.setUpdatedBy(userId);
 
-        try {
-            vehicleMakeRepository.save(vehicleMake);
-        } catch (DataIntegrityViolationException ex) {
-            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                logger.info("Vehicle Make error ==========> id: " + ex.getMessage());
-                throw new Exception("This vehicle make already exists.");
-            }
-            throw ex; // Rethrow if not related to constraint violation
-        }
-    }
+		try {
+			vehicleMakeRepository.save(vehicleMake);
+		} catch (DataIntegrityViolationException ex) {
+			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				logger.info("Vehicle Make error ==========> id: " + ex.getMessage());
+				throw new Exception("This vehicle make already exists.");
+			}
+			throw ex; // Rethrow if not related to constraint violation
+		}
+	}
 
-    @Transactional
-    public void updateVehicleMake(HttpServletRequest request, Long id, VehicleMakeDto vehicleMakeDto) throws Exception {
-        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+	@Transactional
+	public void updateVehicleMake(HttpServletRequest request, Long id, VehicleMakeDto vehicleMakeDto) throws Exception {
+		Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
+		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
-        if (vehicleMakeOpt.isEmpty()) {
-            throw new Exception("The vehicle make cannot be found");
-        }
+		if (vehicleMakeOpt.isEmpty()) {
+			throw new Exception("The vehicle make cannot be found");
+		}
 
-        VehicleMake vehicleMake = vehicleMakeOpt.get();
-        vehicleMake.setMake(vehicleMakeDto.getMake());
-        vehicleMake.setUpdatedBy(userId);
+		VehicleMake vehicleMake = vehicleMakeOpt.get();
+		vehicleMake.setMake(vehicleMakeDto.getMake());
+		vehicleMake.setUpdatedBy(userId);
 
-        try {
-            vehicleMakeRepository.save(vehicleMake);
-        } catch (DataIntegrityViolationException ex) {
-            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                logger.info("Vehicle Make error ==========> id: " + ex.getMessage());
-                throw new Exception("This vehicle make already exists.");
-            }
-            throw ex; // Rethrow if not related to constraint violation
-        }
-    }
+		try {
+			vehicleMakeRepository.save(vehicleMake);
+		} catch (DataIntegrityViolationException ex) {
+			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				logger.info("Vehicle Make error ==========> id: " + ex.getMessage());
+				throw new Exception("This vehicle make already exists.");
+			}
+			throw ex; // Rethrow if not related to constraint violation
+		}
+	}
 
-    @Transactional
-    public void deleteVehicleMake(HttpServletRequest request, Long id) throws Exception {
-        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
+	@Transactional
+	public void deleteVehicleMake(HttpServletRequest request, Long id) throws Exception {
+		Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
 
-        if (vehicleMakeOpt.isPresent()) {
-            vehicleMakeRepository.delete(vehicleMakeOpt.get());
-        } else {
-            throw new Exception("The vehicle make cannot be found");
-        }
-    }
+		if (vehicleMakeOpt.isPresent()) {
+			vehicleMakeRepository.delete(vehicleMakeOpt.get());
+		} else {
+			throw new Exception("The vehicle make cannot be found");
+		}
+	}
 
-    public VehicleMakeDto getVehicleMake(HttpServletRequest request, Long id) throws Exception {
-        Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
-        if (vehicleMakeOpt.isPresent()) {
-            VehicleMake vehicleMake = vehicleMakeOpt.get();
-            VehicleMakeDto vehicleMakeDto = new VehicleMakeDto();
-            vehicleMakeDto.setId(vehicleMake.getId());
-            vehicleMakeDto.setMake(vehicleMake.getMake());
-            return vehicleMakeDto;
-        } else {
-            throw new Exception("The Vehicle Make does not exist");
-        }
-    }
+	public VehicleMakeDto getVehicleMake(HttpServletRequest request, Long id) throws Exception {
+		Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
+		if (vehicleMakeOpt.isPresent()) {
+			VehicleMake vehicleMake = vehicleMakeOpt.get();
+			VehicleMakeDto vehicleMakeDto = new VehicleMakeDto();
+			vehicleMakeDto.setId(vehicleMake.getId());
+			vehicleMakeDto.setMake(vehicleMake.getMake());
+			return vehicleMakeDto;
+		} else {
+			throw new Exception("The Vehicle Make does not exist");
+		}
+	}
 
-    public List<VehicleMakeDto> getVehicleMakes(HttpServletRequest request) throws Exception {
-        List<VehicleMake> vehicleMakes = vehicleMakeRepository.findAll();
-        return vehicleMakes.stream().map(vehicleMake -> {
-            VehicleMakeDto vehicleMakeDto = new VehicleMakeDto();
-            vehicleMakeDto.setId(vehicleMake.getId());
-            vehicleMakeDto.setMake(vehicleMake.getMake());
-            return vehicleMakeDto;
-        }).collect(Collectors.toList());
-    }
+	public List<VehicleMakeDto> getVehicleMakes(HttpServletRequest request) throws Exception {
+		List<VehicleMake> vehicleMakes = vehicleMakeRepository.findAll();
+		return vehicleMakes.stream().map(vehicleMake -> {
+			VehicleMakeDto vehicleMakeDto = new VehicleMakeDto();
+			vehicleMakeDto.setId(vehicleMake.getId());
+			vehicleMakeDto.setMake(vehicleMake.getMake());
+			return vehicleMakeDto;
+		}).collect(Collectors.toList());
+	}
 }
