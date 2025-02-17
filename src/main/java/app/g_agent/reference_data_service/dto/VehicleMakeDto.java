@@ -9,48 +9,60 @@ import jakarta.validation.constraints.NotNull;
 
 public class VehicleMakeDto {
 
-    private Long id;
+	private Long id;
 
-    @NotBlank(message = "Make is required")
-    @NotNull(message = "Make is required")
-    private String make;
+	@NotBlank(message = "Make is required")
+	@NotNull(message = "Make is required")
+	private String make;
 
-    private LocalDateTime updatedAt;
+	@JsonProperty(value = "created_at")
+	private LocalDateTime createdAt;
 
-    @JsonProperty(value = "updated_by")
-    private Long updatedBy;
+	@JsonProperty(value = "updated_at")
+	private LocalDateTime updatedAt;
 
-    // Getters and Setters
+	@JsonProperty(value = "updated_by")
+	private Long updatedBy;
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	// Getters and Setters
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public String getMake() {
-        return make;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setMake(String make) {
-        this.make = make;
-    }
+	public String getMake() {
+		return make;
+	}
+
+	public void setMake(String make) {
+		this.make = make;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 }

@@ -9,100 +9,103 @@ import jakarta.validation.constraints.NotNull;
 
 public class InsuranceCompanyDto {
 
-    private Long id;
+	private Long id;
 
-    @NotBlank(message = "Name is required")
-    @NotNull(message = "Name is required")
-    private String name;
+	@NotBlank(message = "Name is required")
+	@NotNull(message = "Name is required")
+	private String name;
 
-    @NotBlank(message = "Code is required")
-    @NotNull(message = "Code is required")
-    private String code;
+	@NotBlank(message = "Code is required")
+	@NotNull(message = "Code is required")
+	private String code;
 
-    private String contactEmail;
+	private String contactEmail;
 
-    private String contactPhone;
+	private String address;
 
-    private String address;
+	@JsonProperty(value = "contact_phone")
+	private String contactPhone;
 
-    private LocalDateTime createdAt;
+	@JsonProperty(value = "created_at")
+	private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
+	@JsonProperty(value = "updated_at")
+	private LocalDateTime updatedAt;
 
-    @JsonProperty(value = "updated_by")
-    private Long updatedBy;
+	@JsonProperty(value = "updated_by")
+	private Long updatedBy;
 
-    // Getters and Setters
+	// Getters and Setters
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public String getContactEmail() {
-        return contactEmail;
-    }
+	public String getContactEmail() {
+		return contactEmail;
+	}
 
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
+	public void setContactEmail(String contactEmail) {
+		this.contactEmail = contactEmail;
+	}
 
-    public String getContactPhone() {
-        return contactPhone;
-    }
+	public String getContactPhone() {
+		return contactPhone;
+	}
 
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
+	public void setContactPhone(String contactPhone) {
+		this.contactPhone = contactPhone;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getAddress() {
+		return address;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setAddress(String address) {
+		this.address = address;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 }
