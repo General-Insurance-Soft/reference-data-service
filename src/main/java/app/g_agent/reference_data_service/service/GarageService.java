@@ -18,117 +18,122 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class GarageService {
 
-    private static final Logger logger = LoggerFactory.getLogger(GarageService.class);
+	private static final Logger logger = LoggerFactory.getLogger(GarageService.class);
 
-    private  GarageRepository garageRepository;
-    private JwtService jwtService;
+	private GarageRepository garageRepository;
+	private JwtService jwtService;
 
-    public GarageService(GarageRepository garageRepository, JwtService jwtService) {
-        this.garageRepository = garageRepository;
-        this.jwtService = jwtService;
-    }
+	public GarageService(GarageRepository garageRepository, JwtService jwtService) {
+		this.garageRepository = garageRepository;
+		this.jwtService = jwtService;
+	}
 
-    public Garage getGarageById(Long id) throws Exception {
-        Optional<Garage> garage = garageRepository.getGarageById(id);
-        if (garage.isPresent()) {
-            return garage.get();
-        } else {
-            throw new Exception("The Garage does not exist");
-        }
-    }
+	public Garage getGarageById(Long id) throws Exception {
+		Optional<Garage> garage = garageRepository.getGarageById(id);
+		if (garage.isPresent()) {
+			return garage.get();
+		} else {
+			throw new Exception("The Garage does not exist");
+		}
+	}
 
-    @Transactional
-    public void createGarage(HttpServletRequest request, GarageDto garageDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+	@Transactional
+	public void createGarage(HttpServletRequest request, GarageDto garageDto) throws Exception {
+		logger.info("Create Garage service request ==========> userId: "
+				+ jwtService.getTokenValue(jwtService.getJWT(request), "user-id"));
 
-        Garage garage = new Garage();
-        garage.setName(garageDto.getName());
-        garage.setLocation(garageDto.getLocation());
-        garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
-        garage.setContactPhone(garageDto.getContactPhone());
-        garage.setUpdatedBy(userId);
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
-        try {
-            garageRepository.save(garage);
-        } catch (DataIntegrityViolationException ex) {
-            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                logger.info("Garage error ==========> id: " + ex.getMessage());
-                throw new Exception("This garage already exists.");
-            }
-            throw ex; // Rethrow if not related to constraint violation
-        }
-    }
+		Garage garage = new Garage();
+		logger.info("Create Garage model to save ==========> ");
+		garage.setName(garageDto.getName());
+		garage.setLocation(garageDto.getLocation());
+		garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
+		garage.setContactPhone(garageDto.getContactPhone());
+		garage.setUpdatedBy(userId);
 
-    @Transactional
-    public void updateGarage(HttpServletRequest request, Long id, GarageDto garageDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
-        Optional<Garage> garageOpt = garageRepository.getGarageById(id);
+		logger.info("Attemp to persist Garage model  ==========> ");
+		try {
+			garageRepository.save(garage);
+		} catch (DataIntegrityViolationException ex) {
+			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				logger.info("Garage error ==========> id: " + ex.getMessage());
+				throw new Exception("This garage already exists.");
+			}
+			throw ex; // Rethrow if not related to constraint violation
+		}
+	}
 
-        if (garageOpt.isEmpty()) {
-            throw new Exception("The garage cannot be found");
-        }
+	@Transactional
+	public void updateGarage(HttpServletRequest request, Long id, GarageDto garageDto) throws Exception {
+		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
 
-        Garage garage = garageOpt.get();
-        garage.setName(garageDto.getName());
-        garage.setLocation(garageDto.getLocation());
-        garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
-        garage.setContactPhone(garageDto.getContactPhone());
-        garage.setUpdatedBy(userId);
+		if (garageOpt.isEmpty()) {
+			throw new Exception("The garage cannot be found");
+		}
 
-        try {
-            garageRepository.save(garage);
-        } catch (DataIntegrityViolationException ex) {
-            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                logger.info("Garage error ==========> id: " + ex.getMessage());
-                throw new Exception("This garage already exists.");
-            }
-            throw ex; // Rethrow if not related to constraint violation
-        }
-    }
+		Garage garage = garageOpt.get();
+		garage.setName(garageDto.getName());
+		garage.setLocation(garageDto.getLocation());
+		garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
+		garage.setContactPhone(garageDto.getContactPhone());
+		garage.setUpdatedBy(userId);
 
-    @Transactional
-    public void deleteGarage(HttpServletRequest request, Long id) throws Exception {
-        Optional<Garage> garageOpt = garageRepository.getGarageById(id);
+		try {
+			garageRepository.save(garage);
+		} catch (DataIntegrityViolationException ex) {
+			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				logger.info("Garage error ==========> id: " + ex.getMessage());
+				throw new Exception("This garage already exists.");
+			}
+			throw ex; // Rethrow if not related to constraint violation
+		}
+	}
 
-        if (garageOpt.isPresent()) {
-            garageRepository.delete(garageOpt.get());
-        } else {
-            throw new Exception("The garage cannot be found");
-        }
-    }
+	@Transactional
+	public void deleteGarage(HttpServletRequest request, Long id) throws Exception {
+		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
 
-    public GarageDto getGarage(HttpServletRequest request, Long id) throws Exception {
-        Optional<Garage> garageOpt = garageRepository.getGarageById(id);
-        if (garageOpt.isPresent()) {
-            Garage garage = garageOpt.get();
-            GarageDto garageDto = new GarageDto();
-            garageDto.setId(garage.getId());
-            garageDto.setName(garage.getName());
-            garageDto.setLocation(garage.getLocation());
-            garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
-            garageDto.setContactPhone(garage.getContactPhone());
-            garageDto.setCreatedAt(garage.getCreatedAt());
-            garageDto.setUpdatedAt(garage.getUpdatedAt());
-            garageDto.setUpdatedBy(garage.getUpdatedBy());
-            return garageDto;
-        } else {
-            throw new Exception("The Garage does not exist");
-        }
-    }
+		if (garageOpt.isPresent()) {
+			garageRepository.delete(garageOpt.get());
+		} else {
+			throw new Exception("The garage cannot be found");
+		}
+	}
 
-    public List<GarageDto> getGarages(HttpServletRequest request) throws Exception {
-        List<Garage> garages = garageRepository.findAll();
-        return garages.stream().map(garage -> {
-            GarageDto garageDto = new GarageDto();
-            garageDto.setId(garage.getId());
-            garageDto.setName(garage.getName());
-            garageDto.setLocation(garage.getLocation());
-            garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
-            garageDto.setContactPhone(garage.getContactPhone());
-            garageDto.setCreatedAt(garage.getCreatedAt());
-            garageDto.setUpdatedAt(garage.getUpdatedAt());
-            garageDto.setUpdatedBy(garage.getUpdatedBy());
-            return garageDto;
-        }).collect(Collectors.toList());
-    }
+	public GarageDto getGarage(HttpServletRequest request, Long id) throws Exception {
+		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
+		if (garageOpt.isPresent()) {
+			Garage garage = garageOpt.get();
+			GarageDto garageDto = new GarageDto();
+			garageDto.setId(garage.getId());
+			garageDto.setName(garage.getName());
+			garageDto.setLocation(garage.getLocation());
+			garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
+			garageDto.setContactPhone(garage.getContactPhone());
+			garageDto.setCreatedAt(garage.getCreatedAt());
+			garageDto.setUpdatedAt(garage.getUpdatedAt());
+			garageDto.setUpdatedBy(garage.getUpdatedBy());
+			return garageDto;
+		} else {
+			throw new Exception("The Garage does not exist");
+		}
+	}
+
+	public List<GarageDto> getGarages(HttpServletRequest request) throws Exception {
+		List<Garage> garages = garageRepository.findAll();
+		return garages.stream().map(garage -> {
+			GarageDto garageDto = new GarageDto();
+			garageDto.setId(garage.getId());
+			garageDto.setName(garage.getName());
+			garageDto.setLocation(garage.getLocation());
+			garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
+			garageDto.setContactPhone(garage.getContactPhone());
+			garageDto.setCreatedAt(garage.getCreatedAt());
+			garageDto.setUpdatedAt(garage.getUpdatedAt());
+			garageDto.setUpdatedBy(garage.getUpdatedBy());
+			return garageDto;
+		}).collect(Collectors.toList());
+	}
 }
