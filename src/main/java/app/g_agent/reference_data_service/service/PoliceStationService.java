@@ -39,7 +39,7 @@ public class PoliceStationService {
 
     @Transactional
     public void createPoliceStation(HttpServletRequest request, PoliceStationDto policeStationDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+    	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
         PoliceStation policeStation = new PoliceStation();
 
         policeStation.setName(policeStationDto.getName());

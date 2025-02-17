@@ -66,7 +66,7 @@ public class GarageService {
 
 	@Transactional
 	public void updateGarage(HttpServletRequest request, Long id, GarageDto garageDto) throws Exception {
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
 
 		if (garageOpt.isEmpty()) {

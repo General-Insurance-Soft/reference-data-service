@@ -40,7 +40,7 @@ public class VehicleMakeService {
 	@Transactional
 	public void createVehicleMake(HttpServletRequest request, VehicleMakeDto vehicleMakeDto) throws Exception {
 		VehicleMake vehicleMake = new VehicleMake();
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		vehicleMake.setMake(vehicleMakeDto.getMake());
 		vehicleMake.setUpdatedBy(userId);
@@ -59,7 +59,7 @@ public class VehicleMakeService {
 	@Transactional
 	public void updateVehicleMake(HttpServletRequest request, Long id, VehicleMakeDto vehicleMakeDto) throws Exception {
 		Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository.getVehicleMakeById(id);
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		if (vehicleMakeOpt.isEmpty()) {
 			throw new Exception("The vehicle make cannot be found");

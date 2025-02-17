@@ -39,7 +39,7 @@ public class HospitalService {
 
 	@Transactional
 	public void createHospital(HttpServletRequest request, HospitalDto hospitalDto) throws Exception {
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 		Hospital hospital = new Hospital();
 
 		hospital.setName(hospitalDto.getName());
@@ -62,7 +62,7 @@ public class HospitalService {
 	@Transactional
 	public void updateHospital(HttpServletRequest request, Long id, HospitalDto hospitalDto) throws Exception {
 		Optional<Hospital> hospitalOpt = hospitalRepository.getHospitalById(id);
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		if (hospitalOpt.isEmpty()) {
 			throw new Exception("The hospital cannot be found");

@@ -39,7 +39,7 @@ public class DocumentTypeService {
 
     @Transactional
     public void createDocumentType(HttpServletRequest request, DocumentTypeDto documentTypeDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+    	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
         DocumentType documentType = new DocumentType();
         documentType.setName(documentTypeDto.getName());
@@ -58,7 +58,7 @@ public class DocumentTypeService {
 
     @Transactional
     public void updateDocumentType(HttpServletRequest request, Long id, DocumentTypeDto documentTypeDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+    	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
         Optional<DocumentType> documentTypeOpt = documentTypeRepository.getDocumentTypeById(id);
 
         if (documentTypeOpt.isEmpty()) {

@@ -41,7 +41,7 @@ public class InsuranceCompanyService {
 	public void createInsuranceCompany(HttpServletRequest request, InsuranceCompanyDto insuranceCompanyDto)
 			throws Exception {
 		InsuranceCompany insuranceCompany = new InsuranceCompany();
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		insuranceCompany.setName(insuranceCompanyDto.getName());
 		insuranceCompany.setCode(insuranceCompanyDto.getCode());
@@ -65,7 +65,7 @@ public class InsuranceCompanyService {
 	public void updateInsuranceCompany(HttpServletRequest request, Long id, InsuranceCompanyDto insuranceCompanyDto)
 			throws Exception {
 		Optional<InsuranceCompany> insuranceCompanyOpt = insuranceCompanyRepository.getInsuranceCompanyById(id);
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		if (insuranceCompanyOpt.isEmpty()) {
 			throw new Exception("The insurance company cannot be found");

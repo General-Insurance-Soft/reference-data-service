@@ -39,7 +39,7 @@ public class PolicyService {
 
     @Transactional
     public void createPolicy(HttpServletRequest request, PolicyDto policyDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+    	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
         Policy policy = new Policy();
         policy.setName(policyDto.getName());
@@ -58,7 +58,7 @@ public class PolicyService {
 
     @Transactional
     public void updatePolicy(HttpServletRequest request, Long id, PolicyDto policyDto) throws Exception {
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+    	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
         Optional<Policy> policyOpt = policyRepository.getPolicyById(id);
 
         if (policyOpt.isEmpty()) {

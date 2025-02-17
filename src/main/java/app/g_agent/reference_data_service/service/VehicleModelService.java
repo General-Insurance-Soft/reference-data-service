@@ -46,7 +46,7 @@ public class VehicleModelService {
 	@Transactional
 	public void createVehicleModel(HttpServletRequest request, VehicleModelDto vehicleModelDto) throws Exception {
 		VehicleModel vehicleModel = new VehicleModel();
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		vehicleModel.setModel(vehicleModelDto.getModel());
 		vehicleModel.setUpdatedBy(userId);
@@ -73,7 +73,7 @@ public class VehicleModelService {
 	public void updateVehicleModel(HttpServletRequest request, Long id, VehicleModelDto vehicleModelDto)
 			throws Exception {
 		Optional<VehicleModel> vehicleModelOpt = vehicleModelRepository.getVehicleModelById(id);
-		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 
 		if (vehicleModelOpt.isEmpty()) {
 			throw new Exception("The vehicle model cannot be found");
