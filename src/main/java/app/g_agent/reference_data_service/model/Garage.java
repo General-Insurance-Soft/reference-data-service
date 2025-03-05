@@ -43,10 +43,22 @@ public class Garage {
 	@Column(name = "updated_at", nullable = false)
 	private LocalDateTime updatedAt;
 
+	@Column(name = "updated_by")
     private Long updatedBy;
+	
+	@Column(name = "organization_id")
+    private Long organizationId;
 
     // Getters and Setters
 
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
+	}
+	
     public Long getUpdatedBy() {
         return updatedBy;
     }

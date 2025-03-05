@@ -32,7 +32,18 @@ public class GarageDto {
 	@JsonProperty(value = "updated_by")
 	private Long updatedBy;
 
+	@JsonProperty(value = "organization_id")
+	private Long organizationId;
+
 	// Getters and Setters
+
+	public Long getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(Long organizationId) {
+		this.organizationId = organizationId;
+	}
 
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
