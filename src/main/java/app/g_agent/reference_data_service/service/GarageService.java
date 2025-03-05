@@ -28,8 +28,9 @@ public class GarageService {
 		this.jwtService = jwtService;
 	}
 
-	public Garage getGarageById(Long id) throws Exception {
-		Optional<Garage> garage = garageRepository.getGarageById(id);
+	public Garage getGarageByIdAndOrganizationId(HttpServletRequest request, Long id) throws Exception {
+		Long orgId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "organization-id").toString());
+		Optional<Garage> garage = garageRepository.getGarageByIdAndOrganizationId(id, orgId);
 		if (garage.isPresent()) {
 			return garage.get();
 		} else {
@@ -43,6 +44,7 @@ public class GarageService {
 				+ jwtService.getTokenValue(jwtService.getJWT(request), "user-id"));
 
 		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
+		Long orgId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "organization-id").toString());
 
 		Garage garage = new Garage();
 		logger.info("Create Garage model to save ==========> ");
@@ -51,6 +53,7 @@ public class GarageService {
 		garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
 		garage.setContactPhone(garageDto.getContactPhone());
 		garage.setUpdatedBy(userId);
+		garage.setOrganizationId(orgId);
 
 		logger.info("Attemp to persist Garage model  ==========> ");
 		try {
@@ -67,7 +70,8 @@ public class GarageService {
 	@Transactional
 	public void updateGarage(HttpServletRequest request, Long id, GarageDto garageDto) throws Exception {
 		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
-		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
+		Long orgId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "organization-id").toString());
+		Optional<Garage> garageOpt = garageRepository.getGarageByIdAndOrganizationId(id, orgId);
 
 		if (garageOpt.isEmpty()) {
 			throw new Exception("The garage cannot be found");
@@ -93,7 +97,8 @@ public class GarageService {
 
 	@Transactional
 	public void deleteGarage(HttpServletRequest request, Long id) throws Exception {
-		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
+		Long orgId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "organization-id").toString());
+		Optional<Garage> garageOpt = garageRepository.getGarageByIdAndOrganizationId(id, orgId);
 
 		if (garageOpt.isPresent()) {
 			garageRepository.delete(garageOpt.get());
@@ -103,7 +108,8 @@ public class GarageService {
 	}
 
 	public GarageDto getGarage(HttpServletRequest request, Long id) throws Exception {
-		Optional<Garage> garageOpt = garageRepository.getGarageById(id);
+		Long orgId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "organization-id").toString());
+		Optional<Garage> garageOpt = garageRepository.getGarageByIdAndOrganizationId(id, orgId);
 		if (garageOpt.isPresent()) {
 			Garage garage = garageOpt.get();
 			GarageDto garageDto = new GarageDto();
@@ -115,6 +121,7 @@ public class GarageService {
 			garageDto.setCreatedAt(garage.getCreatedAt());
 			garageDto.setUpdatedAt(garage.getUpdatedAt());
 			garageDto.setUpdatedBy(garage.getUpdatedBy());
+			garageDto.setOrganizationId(garage.getOrganizationId());
 			return garageDto;
 		} else {
 			throw new Exception("The Garage does not exist");
@@ -133,6 +140,7 @@ public class GarageService {
 			garageDto.setCreatedAt(garage.getCreatedAt());
 			garageDto.setUpdatedAt(garage.getUpdatedAt());
 			garageDto.setUpdatedBy(garage.getUpdatedBy());
+			garageDto.setOrganizationId(garage.getOrganizationId());
 			return garageDto;
 		}).collect(Collectors.toList());
 	}
