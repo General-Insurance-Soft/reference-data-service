@@ -18,114 +18,113 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class PoliceStationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PoliceStationService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PoliceStationService.class);
 
-    private final PoliceStationRepository policeStationRepository;
-    private JwtService jwtService;
+	private final PoliceStationRepository policeStationRepository;
+	private JwtService jwtService;
 
-    public PoliceStationService(PoliceStationRepository policeStationRepository, JwtService jwtService) {
-        this.policeStationRepository = policeStationRepository;
-        this.jwtService = jwtService;
-    }
+	public PoliceStationService(PoliceStationRepository policeStationRepository, JwtService jwtService) {
+		this.policeStationRepository = policeStationRepository;
+		this.jwtService = jwtService;
+	}
 
-    public PoliceStation getPoliceStationById(Long id) throws Exception {
-        Optional<PoliceStation> policeStation = policeStationRepository.getPoliceStationById(id);
-        if (policeStation.isPresent()) {
-            return policeStation.get();
-        } else {
-            throw new Exception("The Police Station does not exist");
-        }
-    }
+	public PoliceStation getPoliceStationById(Long id) throws Exception {
+		Optional<PoliceStation> policeStation = policeStationRepository.getPoliceStationById(id);
+		if (policeStation.isPresent()) {
+			return policeStation.get();
+		} else {
+			throw new Exception("The Police Station does not exist");
+		}
+	}
 
-    @Transactional
-    public void createPoliceStation(HttpServletRequest request, PoliceStationDto policeStationDto) throws Exception {
-    	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
-        PoliceStation policeStation = new PoliceStation();
+	public void createPoliceStation(HttpServletRequest request, PoliceStationDto policeStationDto) throws Exception {
+		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
+		PoliceStation policeStation = new PoliceStation();
 
-        policeStation.setName(policeStationDto.getName());
-        policeStation.setLocation(policeStationDto.getLocation());
-        policeStation.setJurisdiction(policeStationDto.getJurisdiction());
-        policeStation.setContactPhone(policeStationDto.getContactPhone());
-        policeStation.setUpdatedBy(userId);
+		policeStation.setName(policeStationDto.getName());
+		policeStation.setLocation(policeStationDto.getLocation());
+		policeStation.setJurisdiction(policeStationDto.getJurisdiction());
+		policeStation.setContactPhone(policeStationDto.getContactPhone());
+		policeStation.setUpdatedBy(userId);
 
-        try {
-            policeStationRepository.save(policeStation);
-        } catch (DataIntegrityViolationException ex) {
-            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                logger.info("Police Station error ==========> id: " + ex.getMessage());
-                throw new Exception("This police station already exists.");
-            }
-            throw ex; // Rethrow if not related to constraint violation
-        }
-    }
+		try {
+			policeStationRepository.save(policeStation);
+		} catch (DataIntegrityViolationException ex) {
+			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				logger.info("Police Station error ==========> id: " + ex.getMessage());
+				throw new Exception("This police station already exists.");
+			}
+			throw ex; // Rethrow if not related to constraint violation
+		}
+	}
 
-    @Transactional
-    public void updatePoliceStation(HttpServletRequest request, Long id, PoliceStationDto policeStationDto)
-            throws Exception {
-        Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
-        Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
+	@Transactional
+	public void updatePoliceStation(HttpServletRequest request, Long id, PoliceStationDto policeStationDto)
+			throws Exception {
+		Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
+		Long userId = (Long) jwtService.getTokenValue(jwtService.getJWT(request), "user-id");
 
-        if (policeStationOpt.isEmpty()) {
-            throw new Exception("The police station cannot be found");
-        }
+		if (policeStationOpt.isEmpty()) {
+			throw new Exception("The police station cannot be found");
+		}
 
-        PoliceStation policeStation = policeStationOpt.get();
-        policeStation.setName(policeStationDto.getName());
-        policeStation.setLocation(policeStationDto.getLocation());
-        policeStation.setJurisdiction(policeStationDto.getJurisdiction());
-        policeStation.setContactPhone(policeStationDto.getContactPhone());
-        policeStation.setUpdatedBy(userId);
+		PoliceStation policeStation = policeStationOpt.get();
+		policeStation.setName(policeStationDto.getName());
+		policeStation.setLocation(policeStationDto.getLocation());
+		policeStation.setJurisdiction(policeStationDto.getJurisdiction());
+		policeStation.setContactPhone(policeStationDto.getContactPhone());
+		policeStation.setUpdatedBy(userId);
 
-        try {
-            policeStationRepository.save(policeStation);
-        } catch (DataIntegrityViolationException ex) {
-            if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
-                logger.info("Police Station error ==========> id: " + ex.getMessage());
-                throw new Exception("This police station already exists.");
-            }
-            throw ex; // Rethrow if not related to constraint violation
-        }
-    }
+		try {
+			policeStationRepository.save(policeStation);
+		} catch (DataIntegrityViolationException ex) {
+			if (ex.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+				logger.info("Police Station error ==========> id: " + ex.getMessage());
+				throw new Exception("This police station already exists.");
+			}
+			throw ex; // Rethrow if not related to constraint violation
+		}
+	}
 
-    @Transactional
-    public void deletePoliceStation(HttpServletRequest request, Long id) throws Exception {
-        Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
+	@Transactional
+	public void deletePoliceStation(HttpServletRequest request, Long id) throws Exception {
+		Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
 
-        if (policeStationOpt.isPresent()) {
-            policeStationRepository.delete(policeStationOpt.get());
-        } else {
-            throw new Exception("The police station cannot be found");
-        }
-    }
+		if (policeStationOpt.isPresent()) {
+			policeStationRepository.delete(policeStationOpt.get());
+		} else {
+			throw new Exception("The police station cannot be found");
+		}
+	}
 
-    public PoliceStationDto getPoliceStation(HttpServletRequest request, Long id) throws Exception {
-        Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
-        if (policeStationOpt.isPresent()) {
-            PoliceStation policeStation = policeStationOpt.get();
-            PoliceStationDto policeStationDto = new PoliceStationDto();
-            policeStationDto.setId(policeStation.getId());
-            policeStationDto.setName(policeStation.getName());
-            policeStationDto.setLocation(policeStation.getLocation());
-            policeStationDto.setJurisdiction(policeStation.getJurisdiction());
-            policeStationDto.setContactPhone(policeStation.getContactPhone());
-            policeStationDto.setCreatedAt(policeStation.getCreatedAt());
-            return policeStationDto;
-        } else {
-            throw new Exception("The Police Station does not exist");
-        }
-    }
+	public PoliceStationDto getPoliceStation(HttpServletRequest request, Long id) throws Exception {
+		Optional<PoliceStation> policeStationOpt = policeStationRepository.getPoliceStationById(id);
+		if (policeStationOpt.isPresent()) {
+			PoliceStation policeStation = policeStationOpt.get();
+			PoliceStationDto policeStationDto = new PoliceStationDto();
+			policeStationDto.setId(policeStation.getId());
+			policeStationDto.setName(policeStation.getName());
+			policeStationDto.setLocation(policeStation.getLocation());
+			policeStationDto.setJurisdiction(policeStation.getJurisdiction());
+			policeStationDto.setContactPhone(policeStation.getContactPhone());
+			policeStationDto.setCreatedAt(policeStation.getCreatedAt());
+			return policeStationDto;
+		} else {
+			throw new Exception("The Police Station does not exist");
+		}
+	}
 
-    public List<PoliceStationDto> getPoliceStations(HttpServletRequest request) throws Exception {
-        List<PoliceStation> policeStations = policeStationRepository.findAll();
-        return policeStations.stream().map(policeStation -> {
-            PoliceStationDto policeStationDto = new PoliceStationDto();
-            policeStationDto.setId(policeStation.getId());
-            policeStationDto.setName(policeStation.getName());
-            policeStationDto.setLocation(policeStation.getLocation());
-            policeStationDto.setJurisdiction(policeStation.getJurisdiction());
-            policeStationDto.setContactPhone(policeStation.getContactPhone());
-            policeStationDto.setCreatedAt(policeStation.getCreatedAt());
-            return policeStationDto;
-        }).collect(Collectors.toList());
-    }
+	public List<PoliceStationDto> getPoliceStations(HttpServletRequest request) throws Exception {
+		List<PoliceStation> policeStations = policeStationRepository.findAll();
+		return policeStations.stream().map(policeStation -> {
+			PoliceStationDto policeStationDto = new PoliceStationDto();
+			policeStationDto.setId(policeStation.getId());
+			policeStationDto.setName(policeStation.getName());
+			policeStationDto.setLocation(policeStation.getLocation());
+			policeStationDto.setJurisdiction(policeStation.getJurisdiction());
+			policeStationDto.setContactPhone(policeStation.getContactPhone());
+			policeStationDto.setCreatedAt(policeStation.getCreatedAt());
+			return policeStationDto;
+		}).collect(Collectors.toList());
+	}
 }

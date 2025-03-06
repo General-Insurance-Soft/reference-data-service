@@ -13,10 +13,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "police_stations")
+@Table(name = "police_stations", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "location", "jurisdiction" }) })
 public class PoliceStation {
 
     @Id

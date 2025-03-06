@@ -43,7 +43,6 @@ public class VehicleModelService {
 		}
 	}
 
-	@Transactional
 	public void createVehicleModel(HttpServletRequest request, VehicleModelDto vehicleModelDto) throws Exception {
 		VehicleModel vehicleModel = new VehicleModel();
 		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());

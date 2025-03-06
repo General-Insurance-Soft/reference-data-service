@@ -15,10 +15,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "vehicle_models")
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "vehicle_models", uniqueConstraints = { @UniqueConstraint(columnNames = { "model"}) })
 public class VehicleModel {
 
     @Id

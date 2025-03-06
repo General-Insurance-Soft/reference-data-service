@@ -13,20 +13,21 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "vehicle_makes")
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "vehicle_makes", uniqueConstraints = { @UniqueConstraint(columnNames = { "make" }) })
 public class VehicleMake {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String make;
+	@Column(nullable = false, unique = true)
+	private String make;
 
-    @CreatedDate
+	@CreatedDate
 	@Column(updatable = false, name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
 
@@ -34,47 +35,47 @@ public class VehicleMake {
 	@Column(name = "updated_at", nullable = false)
 	private LocalDateTime updatedAt;
 
-    private Long updatedBy;
+	private Long updatedBy;
 
-    // Getters and Setters
+	// Getters and Setters
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getMake() {
-        return make;
-    }
+	public String getMake() {
+		return make;
+	}
 
-    public void setMake(String make) {
-        this.make = make;
-    }
+	public void setMake(String make) {
+		this.make = make;
+	}
 }

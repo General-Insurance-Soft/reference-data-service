@@ -37,7 +37,6 @@ public class VehicleMakeService {
 		}
 	}
 
-	@Transactional
 	public void createVehicleMake(HttpServletRequest request, VehicleMakeDto vehicleMakeDto) throws Exception {
 		VehicleMake vehicleMake = new VehicleMake();
 		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());

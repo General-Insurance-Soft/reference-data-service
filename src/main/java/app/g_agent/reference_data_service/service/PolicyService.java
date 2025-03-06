@@ -37,7 +37,6 @@ public class PolicyService {
         }
     }
 
-    @Transactional
     public void createPolicy(HttpServletRequest request, PolicyDto policyDto) throws Exception {
     	Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 

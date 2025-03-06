@@ -37,7 +37,6 @@ public class InsuranceCompanyService {
 		}
 	}
 
-	@Transactional
 	public void createInsuranceCompany(HttpServletRequest request, InsuranceCompanyDto insuranceCompanyDto)
 			throws Exception {
 		InsuranceCompany insuranceCompany = new InsuranceCompany();
