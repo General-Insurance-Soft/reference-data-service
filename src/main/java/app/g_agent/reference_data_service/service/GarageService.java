@@ -38,7 +38,6 @@ public class GarageService {
 		}
 	}
 
-	@Transactional
 	public void createGarage(HttpServletRequest request, GarageDto garageDto) throws Exception {
 		logger.info("Create Garage service request ==========> userId: "
 				+ jwtService.getTokenValue(jwtService.getJWT(request), "user-id"));
