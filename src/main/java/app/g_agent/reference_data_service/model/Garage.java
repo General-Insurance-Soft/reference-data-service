@@ -27,14 +27,23 @@ public class Garage {
 	@Column(nullable = false)
 	private String name;
 
+	@Column(name = "code")
+	private String code;
+
+	@Column(name = "email")
+	private String email;
+
+	@Column(name = "jurisdiction")
+	private String jurisdiction;
+
 	@Column
-	private String location;
+	private String address;
+
+	@Column(name = "phone")
+	private String phone;
 
 	@Column(name = "approved_insurance_companies")
 	private String approvedInsuranceCompanies; // JSON array of insurer IDs
-
-	@Column(name = "contact_phone")
-	private String contactPhone;
 
 	@CreatedDate
 	@Column(updatable = false, name = "created_at", nullable = false)
@@ -92,14 +101,6 @@ public class Garage {
 		this.name = name;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
 	public String getApprovedInsuranceCompanies() {
 		return approvedInsuranceCompanies;
 	}
@@ -108,19 +109,51 @@ public class Garage {
 		this.approvedInsuranceCompanies = approvedInsuranceCompanies;
 	}
 
-	public String getContactPhone() {
-		return contactPhone;
-	}
-
-	public void setContactPhone(String contactPhone) {
-		this.contactPhone = contactPhone;
-	}
-
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getJurisdiction() {
+		return jurisdiction;
+	}
+
+	public void setJurisdiction(String jurisdiction) {
+		this.jurisdiction = jurisdiction;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

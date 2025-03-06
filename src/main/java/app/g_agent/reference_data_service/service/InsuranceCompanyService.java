@@ -44,8 +44,9 @@ public class InsuranceCompanyService {
 
 		insuranceCompany.setName(insuranceCompanyDto.getName());
 		insuranceCompany.setCode(insuranceCompanyDto.getCode());
-		insuranceCompany.setContactEmail(insuranceCompanyDto.getContactEmail());
-		insuranceCompany.setContactPhone(insuranceCompanyDto.getContactPhone());
+		insuranceCompany.setEmail(insuranceCompanyDto.getEmail());
+		insuranceCompany.setJurisdiction(insuranceCompanyDto.getJurisdiction());
+		insuranceCompany.setPhone(insuranceCompanyDto.getPhone());
 		insuranceCompany.setAddress(insuranceCompanyDto.getAddress());
 		insuranceCompany.setUpdatedBy(userId);
 
@@ -73,8 +74,9 @@ public class InsuranceCompanyService {
 		InsuranceCompany insuranceCompany = insuranceCompanyOpt.get();
 		insuranceCompany.setName(insuranceCompanyDto.getName());
 		insuranceCompany.setCode(insuranceCompanyDto.getCode());
-		insuranceCompany.setContactEmail(insuranceCompanyDto.getContactEmail());
-		insuranceCompany.setContactPhone(insuranceCompanyDto.getContactPhone());
+		insuranceCompany.setEmail(insuranceCompanyDto.getEmail());
+		insuranceCompany.setJurisdiction(insuranceCompanyDto.getJurisdiction());
+		insuranceCompany.setPhone(insuranceCompanyDto.getPhone());
 		insuranceCompany.setAddress(insuranceCompanyDto.getAddress());
 		insuranceCompany.setUpdatedBy(userId);
 
@@ -108,8 +110,9 @@ public class InsuranceCompanyService {
 			insuranceCompanyDto.setId(insuranceCompany.getId());
 			insuranceCompanyDto.setName(insuranceCompany.getName());
 			insuranceCompanyDto.setCode(insuranceCompany.getCode());
-			insuranceCompanyDto.setContactEmail(insuranceCompany.getContactEmail());
-			insuranceCompanyDto.setContactPhone(insuranceCompany.getContactPhone());
+			insuranceCompanyDto.setEmail(insuranceCompany.getEmail());
+			insuranceCompanyDto.setJurisdiction(insuranceCompany.getJurisdiction());
+			insuranceCompanyDto.setPhone(insuranceCompany.getPhone());
 			insuranceCompanyDto.setAddress(insuranceCompany.getAddress());
 			insuranceCompanyDto.setCreatedAt(insuranceCompany.getCreatedAt());
 			return insuranceCompanyDto;
@@ -125,8 +128,9 @@ public class InsuranceCompanyService {
 			insuranceCompanyDto.setId(insuranceCompany.getId());
 			insuranceCompanyDto.setName(insuranceCompany.getName());
 			insuranceCompanyDto.setCode(insuranceCompany.getCode());
-			insuranceCompanyDto.setContactEmail(insuranceCompany.getContactEmail());
-			insuranceCompanyDto.setContactPhone(insuranceCompany.getContactPhone());
+			insuranceCompanyDto.setEmail(insuranceCompany.getEmail());
+			insuranceCompanyDto.setJurisdiction(insuranceCompany.getJurisdiction());
+			insuranceCompanyDto.setPhone(insuranceCompany.getPhone());
 			insuranceCompanyDto.setAddress(insuranceCompany.getAddress());
 			insuranceCompanyDto.setCreatedAt(insuranceCompany.getCreatedAt());
 			return insuranceCompanyDto;

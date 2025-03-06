@@ -19,12 +19,13 @@ public class InsuranceCompanyDto {
 	@NotNull(message = "Code is required")
 	private String code;
 
-	private String contactEmail;
+	private String email;
+
+	private String phone;
+
+	private String jurisdiction;
 
 	private String address;
-
-	@JsonProperty(value = "contact_phone")
-	private String contactPhone;
 
 	@JsonProperty(value = "created_at")
 	private LocalDateTime createdAt;
@@ -69,6 +70,22 @@ public class InsuranceCompanyDto {
 		this.name = name;
 	}
 
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public String getJurisdiction() {
+		return jurisdiction;
+	}
+
+	public void setJurisdiction(String jurisdiction) {
+		this.jurisdiction = jurisdiction;
+	}
+
 	public String getCode() {
 		return code;
 	}
@@ -77,20 +94,20 @@ public class InsuranceCompanyDto {
 		this.code = code;
 	}
 
-	public String getContactEmail() {
-		return contactEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setContactEmail(String contactEmail) {
-		this.contactEmail = contactEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getContactPhone() {
-		return contactPhone;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setContactPhone(String contactPhone) {
-		this.contactPhone = contactPhone;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getAddress() {
@@ -99,13 +116,5 @@ public class InsuranceCompanyDto {
 
 	public void setAddress(String address) {
 		this.address = address;
-	}
-
-	public LocalDateTime getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
 	}
 }

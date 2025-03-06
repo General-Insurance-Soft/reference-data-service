@@ -15,12 +15,17 @@ public class PoliceStationDto {
 	@NotNull(message = "Name is required")
 	private String name;
 
-	private String location;
+	@NotBlank(message = "Code is required")
+	@NotNull(message = "Code is required")
+	private String code;
+
+	private String email;
+
+	private String phone;
 
 	private String jurisdiction;
 
-	@JsonProperty(value = "contact_phone")
-	private String contactPhone;
+	private String address;
 
 	@JsonProperty(value = "created_at")
 	private LocalDateTime createdAt;
@@ -65,14 +70,6 @@ public class PoliceStationDto {
 		this.name = name;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
 	public String getJurisdiction() {
 		return jurisdiction;
 	}
@@ -81,19 +78,43 @@ public class PoliceStationDto {
 		this.jurisdiction = jurisdiction;
 	}
 
-	public String getContactPhone() {
-		return contactPhone;
-	}
-
-	public void setContactPhone(String contactPhone) {
-		this.contactPhone = contactPhone;
-	}
-
 	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
 	public void setCreatedAt(LocalDateTime createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 }

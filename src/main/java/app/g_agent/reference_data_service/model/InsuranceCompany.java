@@ -17,29 +17,33 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "insurance_companies", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "contactPhone" }) })
+@Table(name = "insurance_companies", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "name", "contactPhone" }) })
 public class InsuranceCompany {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column(nullable = false, unique = true)
-    private String code;
+	@Column(name = "code")
+	private String code;
 
-    @Column(name = "contact_email")
-    private String contactEmail;
+	@Column(name = "email")
+	private String email;
 
-    @Column(name = "contact_phone")
-    private String contactPhone;
+	@Column(name = "jurisdiction")
+	private String jurisdiction;
 
-    @Column
-    private String address;
+	@Column
+	private String address;
 
-    @CreatedDate
+	@Column(name = "phone")
+	private String phone;
+
+	@CreatedDate
 	@Column(updatable = false, name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
 
@@ -47,79 +51,87 @@ public class InsuranceCompany {
 	@Column(name = "updated_at", nullable = false)
 	private LocalDateTime updatedAt;
 
-    private Long updatedBy;
+	private Long updatedBy;
 
-    // Getters and Setters
+	// Getters and Setters
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public String getContactEmail() {
-        return contactEmail;
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public String getContactPhone() {
-        return contactPhone;
-    }
+	public String getJurisdiction() {
+		return jurisdiction;
+	}
 
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
+	public void setJurisdiction(String jurisdiction) {
+		this.jurisdiction = jurisdiction;
+	}
 
-    public String getAddress() {
-        return address;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

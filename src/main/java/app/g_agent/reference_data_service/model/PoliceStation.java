@@ -17,26 +17,33 @@ import jakarta.persistence.UniqueConstraint;
 
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-@Table(name = "police_stations", uniqueConstraints = { @UniqueConstraint(columnNames = { "name", "location", "jurisdiction" }) })
+@Table(name = "police_stations", uniqueConstraints = {
+		@UniqueConstraint(columnNames = { "name", "location", "jurisdiction" }) })
 public class PoliceStation {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String name;
+	@Column(nullable = false)
+	private String name;
 
-    @Column
-    private String location;
+	@Column(name = "code")
+	private String code;
 
-    @Column
-    private String jurisdiction;
+	@Column(name = "email")
+	private String email;
 
-    @Column(name = "contact_phone")
-    private String contactPhone;
+	@Column(name = "jurisdiction")
+	private String jurisdiction;
 
-   @CreatedDate
+	@Column
+	private String address;
+
+	@Column(name = "phone")
+	private String phone;
+
+	@CreatedDate
 	@Column(updatable = false, name = "created_at", nullable = false)
 	private LocalDateTime createdAt;
 
@@ -44,71 +51,87 @@ public class PoliceStation {
 	@Column(name = "updated_at", nullable = false)
 	private LocalDateTime updatedAt;
 
-    private Long updatedBy;
+	private Long updatedBy;
 
-    // Getters and Setters
+	// Getters and Setters
 
-    public Long getUpdatedBy() {
-        return updatedBy;
-    }
+	public Long getUpdatedBy() {
+		return updatedBy;
+	}
 
-    public void setUpdatedBy(Long updatedBy) {
-        this.updatedBy = updatedBy;
-    }
+	public void setUpdatedBy(Long updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getLocation() {
-        return location;
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public String getJurisdiction() {
-        return jurisdiction;
-    }
+	public String getJurisdiction() {
+		return jurisdiction;
+	}
 
-    public void setJurisdiction(String jurisdiction) {
-        this.jurisdiction = jurisdiction;
-    }
+	public void setJurisdiction(String jurisdiction) {
+		this.jurisdiction = jurisdiction;
+	}
 
-    public String getContactPhone() {
-        return contactPhone;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
 }

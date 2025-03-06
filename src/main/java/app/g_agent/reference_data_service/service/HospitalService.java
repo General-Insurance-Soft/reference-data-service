@@ -42,9 +42,12 @@ public class HospitalService {
 		Hospital hospital = new Hospital();
 
 		hospital.setName(hospitalDto.getName());
-		hospital.setLocation(hospitalDto.getLocation());
+		hospital.setCode(hospitalDto.getCode());
+		hospital.setEmail(hospitalDto.getEmail());
+		hospital.setJurisdiction(hospitalDto.getJurisdiction());
+		hospital.setAddress(hospitalDto.getAddress());
+		hospital.setPhone(hospitalDto.getPhone());
 		hospital.setApprovedInsuranceCompanies(hospitalDto.getApprovedInsuranceCompanies());
-		hospital.setContactPhone(hospitalDto.getContactPhone());
 		hospital.setUpdatedBy(userId);
 
 		try {
@@ -69,9 +72,13 @@ public class HospitalService {
 
 		Hospital hospital = hospitalOpt.get();
 		hospital.setName(hospitalDto.getName());
-		hospital.setLocation(hospitalDto.getLocation());
+		hospital.setName(hospitalDto.getName());
+		hospital.setCode(hospitalDto.getCode());
+		hospital.setEmail(hospitalDto.getEmail());
+		hospital.setJurisdiction(hospitalDto.getJurisdiction());
+		hospital.setAddress(hospitalDto.getAddress());
+		hospital.setPhone(hospitalDto.getPhone());
 		hospital.setApprovedInsuranceCompanies(hospitalDto.getApprovedInsuranceCompanies());
-		hospital.setContactPhone(hospitalDto.getContactPhone());
 		hospital.setUpdatedBy(userId);
 
 		try {
@@ -103,9 +110,12 @@ public class HospitalService {
 			HospitalDto hospitalDto = new HospitalDto();
 			hospitalDto.setId(hospital.getId());
 			hospitalDto.setName(hospital.getName());
-			hospitalDto.setLocation(hospital.getLocation());
+			hospitalDto.setCode(hospital.getCode());
+			hospitalDto.setEmail(hospital.getEmail());
+			hospitalDto.setJurisdiction(hospital.getJurisdiction());
+			hospitalDto.setAddress(hospital.getAddress());
+			hospitalDto.setPhone(hospital.getPhone());
 			hospitalDto.setApprovedInsuranceCompanies(hospital.getApprovedInsuranceCompanies());
-			hospitalDto.setContactPhone(hospital.getContactPhone());
 			hospitalDto.setCreatedAt(hospital.getCreatedAt());
 			return hospitalDto;
 		} else {
@@ -119,9 +129,12 @@ public class HospitalService {
 			HospitalDto hospitalDto = new HospitalDto();
 			hospitalDto.setId(hospital.getId());
 			hospitalDto.setName(hospital.getName());
-			hospitalDto.setLocation(hospital.getLocation());
+			hospitalDto.setCode(hospital.getCode());
+			hospitalDto.setEmail(hospital.getEmail());
+			hospitalDto.setJurisdiction(hospital.getJurisdiction());
+			hospitalDto.setAddress(hospital.getAddress());
+			hospitalDto.setPhone(hospital.getPhone());
 			hospitalDto.setApprovedInsuranceCompanies(hospital.getApprovedInsuranceCompanies());
-			hospitalDto.setContactPhone(hospital.getContactPhone());
 			hospitalDto.setCreatedAt(hospital.getCreatedAt());
 			return hospitalDto;
 		}).collect(Collectors.toList());

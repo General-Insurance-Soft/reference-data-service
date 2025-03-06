@@ -42,9 +42,12 @@ public class PoliceStationService {
 		PoliceStation policeStation = new PoliceStation();
 
 		policeStation.setName(policeStationDto.getName());
-		policeStation.setLocation(policeStationDto.getLocation());
 		policeStation.setJurisdiction(policeStationDto.getJurisdiction());
-		policeStation.setContactPhone(policeStationDto.getContactPhone());
+		policeStation.setCode(policeStationDto.getCode());
+		policeStation.setEmail(policeStationDto.getEmail());
+		policeStation.setAddress(policeStationDto.getAddress());
+		policeStation.setPhone(policeStationDto.getPhone());
+		policeStation.setAddress(policeStationDto.getAddress());
 		policeStation.setUpdatedBy(userId);
 
 		try {
@@ -70,9 +73,12 @@ public class PoliceStationService {
 
 		PoliceStation policeStation = policeStationOpt.get();
 		policeStation.setName(policeStationDto.getName());
-		policeStation.setLocation(policeStationDto.getLocation());
 		policeStation.setJurisdiction(policeStationDto.getJurisdiction());
-		policeStation.setContactPhone(policeStationDto.getContactPhone());
+		policeStation.setCode(policeStationDto.getCode());
+		policeStation.setEmail(policeStationDto.getEmail());
+		policeStation.setAddress(policeStationDto.getAddress());
+		policeStation.setPhone(policeStationDto.getPhone());
+		policeStation.setUpdatedBy(userId);
 		policeStation.setUpdatedBy(userId);
 
 		try {
@@ -104,9 +110,11 @@ public class PoliceStationService {
 			PoliceStationDto policeStationDto = new PoliceStationDto();
 			policeStationDto.setId(policeStation.getId());
 			policeStationDto.setName(policeStation.getName());
-			policeStationDto.setLocation(policeStation.getLocation());
 			policeStationDto.setJurisdiction(policeStation.getJurisdiction());
-			policeStationDto.setContactPhone(policeStation.getContactPhone());
+			policeStationDto.setCode(policeStation.getCode());
+			policeStationDto.setEmail(policeStation.getEmail());
+			policeStationDto.setPhone(policeStation.getPhone());
+			policeStationDto.setAddress(policeStation.getAddress());
 			policeStationDto.setCreatedAt(policeStation.getCreatedAt());
 			return policeStationDto;
 		} else {
@@ -120,9 +128,11 @@ public class PoliceStationService {
 			PoliceStationDto policeStationDto = new PoliceStationDto();
 			policeStationDto.setId(policeStation.getId());
 			policeStationDto.setName(policeStation.getName());
-			policeStationDto.setLocation(policeStation.getLocation());
 			policeStationDto.setJurisdiction(policeStation.getJurisdiction());
-			policeStationDto.setContactPhone(policeStation.getContactPhone());
+			policeStationDto.setCode(policeStation.getCode());
+			policeStationDto.setEmail(policeStation.getEmail());
+			policeStationDto.setPhone(policeStation.getPhone());
+			policeStationDto.setAddress(policeStation.getAddress());
 			policeStationDto.setCreatedAt(policeStation.getCreatedAt());
 			return policeStationDto;
 		}).collect(Collectors.toList());

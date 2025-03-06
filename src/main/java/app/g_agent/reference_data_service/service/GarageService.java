@@ -48,9 +48,12 @@ public class GarageService {
 		Garage garage = new Garage();
 		logger.info("Create Garage model to save ==========> ");
 		garage.setName(garageDto.getName());
-		garage.setLocation(garageDto.getLocation());
+		garage.setCode(garageDto.getCode());
+		garage.setEmail(garageDto.getEmail());
+		garage.setJurisdiction(garageDto.getJurisdiction());
+		garage.setAddress(garageDto.getAddress());
+		garage.setPhone(garageDto.getPhone());
 		garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
-		garage.setContactPhone(garageDto.getContactPhone());
 		garage.setUpdatedBy(userId);
 		garage.setOrganizationId(orgId);
 
@@ -78,9 +81,12 @@ public class GarageService {
 
 		Garage garage = garageOpt.get();
 		garage.setName(garageDto.getName());
-		garage.setLocation(garageDto.getLocation());
+		garage.setCode(garageDto.getCode());
+		garage.setEmail(garageDto.getEmail());
+		garage.setJurisdiction(garageDto.getJurisdiction());
+		garage.setAddress(garageDto.getAddress());
+		garage.setPhone(garageDto.getPhone());
 		garage.setApprovedInsuranceCompanies(garageDto.getApprovedInsuranceCompanies());
-		garage.setContactPhone(garageDto.getContactPhone());
 		garage.setUpdatedBy(userId);
 
 		try {
@@ -114,9 +120,12 @@ public class GarageService {
 			GarageDto garageDto = new GarageDto();
 			garageDto.setId(garage.getId());
 			garageDto.setName(garage.getName());
-			garageDto.setLocation(garage.getLocation());
+			garageDto.setCode(garage.getCode());
+			garageDto.setEmail(garage.getEmail());
+			garageDto.setJurisdiction(garage.getJurisdiction());
+			garageDto.setAddress(garage.getAddress());
+			garageDto.setPhone(garage.getPhone());
 			garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
-			garageDto.setContactPhone(garage.getContactPhone());
 			garageDto.setCreatedAt(garage.getCreatedAt());
 			garageDto.setUpdatedAt(garage.getUpdatedAt());
 			garageDto.setUpdatedBy(garage.getUpdatedBy());
@@ -133,9 +142,12 @@ public class GarageService {
 			GarageDto garageDto = new GarageDto();
 			garageDto.setId(garage.getId());
 			garageDto.setName(garage.getName());
-			garageDto.setLocation(garage.getLocation());
+			garageDto.setCode(garage.getCode());
+			garageDto.setEmail(garage.getEmail());
+			garageDto.setJurisdiction(garage.getJurisdiction());
+			garageDto.setAddress(garage.getAddress());
+			garageDto.setPhone(garage.getPhone());
 			garageDto.setApprovedInsuranceCompanies(garage.getApprovedInsuranceCompanies());
-			garageDto.setContactPhone(garage.getContactPhone());
 			garageDto.setCreatedAt(garage.getCreatedAt());
 			garageDto.setUpdatedAt(garage.getUpdatedAt());
 			garageDto.setUpdatedBy(garage.getUpdatedBy());
