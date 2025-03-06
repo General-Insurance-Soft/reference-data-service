@@ -37,7 +37,6 @@ public class HospitalService {
 		}
 	}
 
-	@Transactional
 	public void createHospital(HttpServletRequest request, HospitalDto hospitalDto) throws Exception {
 		Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 		Hospital hospital = new Hospital();
