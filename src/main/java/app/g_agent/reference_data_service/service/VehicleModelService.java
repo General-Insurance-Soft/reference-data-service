@@ -51,7 +51,7 @@ public class VehicleModelService {
 		vehicleModel.setUpdatedBy(userId);
 
 		Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository
-				.getVehicleMakeById(vehicleModelDto.getMake().getId());
+				.getVehicleMakeByMake(vehicleModelDto.getMake().getMake());
 		if (vehicleMakeOpt.isEmpty()) {
 			throw new Exception("The Vehicle Make does not exist");
 		}
@@ -83,7 +83,7 @@ public class VehicleModelService {
 		vehicleModel.setUpdatedBy(userId);
 
 		Optional<VehicleMake> vehicleMakeOpt = vehicleMakeRepository
-				.getVehicleMakeById(vehicleModelDto.getMake().getId());
+				.getVehicleMakeByMake(vehicleModelDto.getMake().getMake());
 		if (vehicleMakeOpt.isEmpty()) {
 			throw new Exception("The Vehicle Make does not exist");
 		}
