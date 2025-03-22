@@ -81,6 +81,7 @@ public class InsuranceCompanyController {
 
     @GetMapping("/get")
     public ResponseEntity<?> getInsuranceCompany(HttpServletRequest request, @RequestParam Long id) {
+        logger.info("Fetching insurance company with ID: {}", id);
         Message message = new Message();
 
         try {
@@ -94,6 +95,7 @@ public class InsuranceCompanyController {
 
     @GetMapping("/get-insurance-companies")
     public ResponseEntity<?> getInsuranceCompanies(HttpServletRequest request) {
+        logger.info("Fetching all insurance companies");
         Message message = new Message();
 
         try {
