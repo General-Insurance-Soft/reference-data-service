@@ -1,8 +1,10 @@
 package app.g_agent.reference_data_service.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -44,14 +46,14 @@ public class AdministrativeAreaService {
         return areas.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 
-    public List<AdministrativeAreaDto> getAdministrativeAreas(HttpServletRequest request, List<Long> locationIds) {
-        List<AdministrativeArea> areas = administrativeAreaRepository.findByIds(locationIds);
+    public Set<AdministrativeAreaDto> getAdministrativeAreas(HttpServletRequest request, List<Long> locationIds) {
+        Set<AdministrativeArea> areas = administrativeAreaRepository.findByIds(locationIds);
 	
 		if (areas.isEmpty()) {
-			List<AdministrativeAreaDto> emptyList = new ArrayList<>();
+			Set<AdministrativeAreaDto> emptyList = new HashSet<>();
 			return emptyList;
 		}
-        return areas.stream().map(this::mapToDto).collect(Collectors.toList());
+        return areas.stream().map(this::mapToDto).collect(Collectors.toSet());
     }
 
     public void createAdministrativeArea(HttpServletRequest request, AdministrativeAreaDto areaDto) throws Exception {
@@ -77,7 +79,8 @@ public class AdministrativeAreaService {
     }
 
     @Transactional
-    public void updateAdministrativeArea(HttpServletRequest request, Long id, AdministrativeAreaDto areaDto) throws Exception {
+    public void updateAdministrativeArea(HttpServletRequest request, Long id, AdministrativeAreaDto areaDto)
+            throws Exception {
         Optional<AdministrativeArea> areaOpt = administrativeAreaRepository.findById(id);
         Long userId = Long.parseLong(jwtService.getTokenValue(jwtService.getJWT(request), "user-id").toString());
 

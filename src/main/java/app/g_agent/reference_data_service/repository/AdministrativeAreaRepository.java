@@ -1,6 +1,7 @@
 package app.g_agent.reference_data_service.repository;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,5 +20,5 @@ public interface AdministrativeAreaRepository extends JpaRepository<Administrati
     List<AdministrativeArea> findByCountryCode(String countryCode);
 
     @Query("SELECT c FROM AdministrativeArea c WHERE c.id IN :ids")
-    List<AdministrativeArea> findByIds(@Param("ids") List<Long> ids);
+    Set<AdministrativeArea> findByIds(@Param("ids") List<Long> ids);
 }
