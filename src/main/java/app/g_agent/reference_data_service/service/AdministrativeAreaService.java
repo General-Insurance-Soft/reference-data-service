@@ -1,5 +1,6 @@
 package app.g_agent.reference_data_service.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +41,16 @@ public class AdministrativeAreaService {
 
     public List<AdministrativeAreaDto> getAdministrativeAreas(HttpServletRequest request) {
         List<AdministrativeArea> areas = administrativeAreaRepository.findAll();
+        return areas.stream().map(this::mapToDto).collect(Collectors.toList());
+    }
+
+    public List<AdministrativeAreaDto> getAdministrativeAreas(HttpServletRequest request, List<Long> locationIds) {
+        List<AdministrativeArea> areas = administrativeAreaRepository.findByIds(locationIds);
+	
+		if (areas.isEmpty()) {
+			List<AdministrativeAreaDto> emptyList = new ArrayList<>();
+			return emptyList;
+		}
         return areas.stream().map(this::mapToDto).collect(Collectors.toList());
     }
 

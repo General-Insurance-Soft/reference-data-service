@@ -1,5 +1,7 @@
 package app.g_agent.reference_data_service.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,6 +95,20 @@ public class AdministrativeAreaController {
 
         try {
             return ResponseEntity.ok(administrativeAreaService.getAdministrativeAreas(request));
+        } catch (Exception ex) {
+            message.setName("Error");
+            message.setMessage(ex.getMessage());
+            return ResponseEntity.status(403).body(message);
+        }
+    }
+
+    @PostMapping("/get-administrative-areas-by-ids")
+    public ResponseEntity<?> getAdministrativeAreasByIds(HttpServletRequest request, @RequestBody List<Long> locationIds) {
+        logger.info("Fetching all administrative areas");
+        Message message = new Message();
+
+        try {
+            return ResponseEntity.ok(administrativeAreaService.getAdministrativeAreas(request, locationIds));
         } catch (Exception ex) {
             message.setName("Error");
             message.setMessage(ex.getMessage());
