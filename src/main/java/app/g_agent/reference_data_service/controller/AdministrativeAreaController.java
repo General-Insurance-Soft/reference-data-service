@@ -1,6 +1,8 @@
 package app.g_agent.reference_data_service.controller;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +28,8 @@ public class AdministrativeAreaController {
     AdministrativeAreaService administrativeAreaService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createAdministrativeArea(HttpServletRequest request, @Valid @RequestBody AdministrativeAreaDto areaDto) {
+    public ResponseEntity<?> createAdministrativeArea(HttpServletRequest request,
+            @Valid @RequestBody AdministrativeAreaDto areaDto) {
         Message message = new Message();
 
         try {
@@ -42,8 +45,9 @@ public class AdministrativeAreaController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateAdministrativeArea(HttpServletRequest request, @RequestBody AdministrativeAreaDto areaDto,
-                                                      @RequestParam Long id) {
+    public ResponseEntity<?> updateAdministrativeArea(HttpServletRequest request,
+            @RequestBody AdministrativeAreaDto areaDto,
+            @RequestParam Long id) {
         Message message = new Message();
 
         try {
@@ -102,14 +106,20 @@ public class AdministrativeAreaController {
         }
     }
 
-    @PostMapping("/get-administrative-areas-by-ids")
-    public ResponseEntity<?> getAdministrativeAreasByIds(HttpServletRequest request, @RequestBody List<Long> locationIds) {
-        logger.info("Fetching all administrative areas");
-        Message message = new Message();
+    @GetMapping("/get-administrative-areas-by-ids")
+    public ResponseEntity<?> getAdministrativeAreasByIds(HttpServletRequest request,
+            @RequestParam String locationIds) {
+        logger.info("Fetching all administrative areas of size {} ========> " + locationIds);
+        List<Long> ids = Arrays.stream(locationIds.split(","))
+                .map(String::trim)
+                .map(Long::parseLong)
+                .toList();
 
         try {
-            return ResponseEntity.ok(administrativeAreaService.getAdministrativeAreas(request, locationIds));
+            return ResponseEntity.ok(administrativeAreaService.getAdministrativeAreas(request, ids));
+            // return ResponseEntity.ok("DOne");
         } catch (Exception ex) {
+            Message message = new Message();
             message.setName("Error");
             message.setMessage(ex.getMessage());
             return ResponseEntity.status(403).body(message);

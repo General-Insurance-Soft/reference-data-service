@@ -47,6 +47,7 @@ public class AdministrativeAreaService {
     }
 
     public Set<AdministrativeAreaDto> getAdministrativeAreas(HttpServletRequest request, List<Long> locationIds) {
+        logger.info("Fetching administrative services from passed ids ======>{}", locationIds);
         Set<AdministrativeArea> areas = administrativeAreaRepository.findByIds(locationIds);
 	
 		if (areas.isEmpty()) {
